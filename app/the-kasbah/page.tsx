@@ -35,6 +35,41 @@ interface GalleryImage {
   Caption?: string;
 }
 
+// Icons
+const BedIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-5h18v5" /><path d="M3 13v-2a2 2 0 012-2h14a2 2 0 012 2v2" /><circle cx="7" cy="11" r="2" /></svg>);
+const BathIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5v15" /><path d="M4 8h12a4 4 0 014 4" /><path d="M14 14v2M11 15v2M17 15v2M14 19v2" /></svg>);
+const MealsIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="14" r="6" /><circle cx="12" cy="14" r="2" /></svg>);
+const AcIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="10" rx="1" /><path d="M7 18c0-1.5 1-3 2-3s2 1.5 2 3" /><path d="M13 18c0-1.5 1-3 2-3s2 1.5 2 3" /></svg>);
+const AmenitiesIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="8" y="8" width="8" height="12" rx="1" /><path d="M10 8V6a2 2 0 014 0v2" /><path d="M10 12h4" /></svg>);
+const CarIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 15h14l-2-5H7l-2 5z" /><path d="M5 15v3h14v-3" /><circle cx="7.5" cy="18" r="1.5" /><circle cx="16.5" cy="18" r="1.5" /></svg>);
+const PoolIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 16c2-2 4-2 6 0s4 2 6 0 4-2 6 0" /><path d="M3 20c2-2 4-2 6 0s4 2 6 0 4-2 6 0" /></svg>);
+const WifiIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 10c4-4 12-4 16 0" /><path d="M7 13c3-3 7-3 10 0" /><path d="M10 16c1.5-1.5 2.5-1.5 4 0" /><circle cx="12" cy="19" r="1" fill="currentColor" /></svg>);
+const HikingIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="5" r="2" /><path d="M9 22l3-9 3 9" /><path d="M7 12l5 1 5-1" /><path d="M12 8v5" /></svg>);
+const TeaIcon = () => (<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h10a4 4 0 010 8H5a4 4 0 010-8z" /><path d="M15 14h2a2 2 0 010 4h-2" /><path d="M8 12V9M10 12V8M12 12V9" /></svg>);
+
+const iconMap: Record<string, () => JSX.Element> = {
+  "room": BedIcon, "accommodation": BedIcon, "night": BedIcon, "bed": BedIcon,
+  "bathroom": BathIcon, "en-suite": BathIcon, "ensuite": BathIcon, "private": BathIcon,
+  "breakfast": MealsIcon, "dinner": MealsIcon, "meal": MealsIcon, "lunch": MealsIcon, "food": MealsIcon,
+  "air": AcIcon, "conditioning": AcIcon, "ac": AcIcon,
+  "shower": AmenitiesIcon, "shampoo": AmenitiesIcon, "toiletries": AmenitiesIcon, "amenities": AmenitiesIcon,
+  "transfer": CarIcon, "transport": CarIcon, "pickup": CarIcon, "drive": CarIcon,
+  "pool": PoolIcon, "swimming": PoolIcon,
+  "wifi": WifiIcon, "wi-fi": WifiIcon, "internet": WifiIcon,
+  "hike": HikingIcon, "walk": HikingIcon, "trek": HikingIcon, "guided": HikingIcon, "tour": HikingIcon,
+  "tea": TeaIcon, "welcome": TeaIcon,
+};
+
+const getIconForFeature = (feature: string): JSX.Element | null => {
+  const lowerFeature = feature.toLowerCase();
+  const matchedKey = Object.keys(iconMap).find(key => lowerFeature.includes(key));
+  if (matchedKey) {
+    const Icon = iconMap[matchedKey];
+    return <Icon />;
+  }
+  return null;
+};
+
 export default function TheKasbahPage() {
   const { formatPrice } = useCurrency();
   const [hero, setHero] = useState<Hero | null>(null);
@@ -131,12 +166,17 @@ export default function TheKasbahPage() {
                 <div>
                   <h3 className="font-serif text-xl mb-6 italic">What's included</h3>
                   <ul className="space-y-4 text-[#2a2520]/60 text-sm">
-                    {experience.includes.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#2a2520]/30 mt-2 flex-shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
+                    {experience.includes.map((item, i) => {
+                      const icon = getIconForFeature(item);
+                      return (
+                        <li key={i} className="flex items-start gap-3">
+                          <span className="text-[#2a2520]/30 mt-0.5 flex-shrink-0">
+                            {icon || <span className="w-1.5 h-1.5 rounded-full bg-[#2a2520]/30 block mt-1.5" />}
+                          </span>
+                          <span>{item}</span>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
 
