@@ -167,7 +167,29 @@ function Calendar({
           const isCheckIn = dateStr === selectedCheckIn;
           const isCheckOut = dateStr === selectedCheckOut;
           const isRange = isInRange(dateStr);
-          const isDisabled = isPastDate || isBookedDate;
+          
+          // When selecting checkout (check-in already set, checkout not set)
+          const isSelectingCheckout = selectCheckout && selectedCheckIn && !selectedCheckOut;
+          
+          // Find the first booked date after check-in to limit checkout options
+          let canBeCheckout = false;
+          if (isSelectingCheckout && dateStr > selectedCheckIn) {
+            // Check if there's any booked date between check-in and this date (exclusive)
+            let hasBookedInBetween = false;
+            const checkInDate = new Date(selectedCheckIn);
+            const thisDate = new Date(dateStr);
+            for (let d = new Date(checkInDate); d < thisDate; d.setDate(d.getDate() + 1)) {
+              const dStr = d.toISOString().split('T')[0];
+              if (dStr !== selectedCheckIn && bookedDates.includes(dStr)) {
+                hasBookedInBetween = true;
+                break;
+              }
+            }
+            // Allow checkout if no booked dates in between (checkout on a booked date is fine - you leave in the morning)
+            canBeCheckout = !hasBookedInBetween;
+          }
+          
+          const isDisabled = isPastDate || (isBookedDate && !canBeCheckout);
 
           return (
             <button
@@ -180,13 +202,13 @@ function Calendar({
                 ${isCheckIn || isCheckOut ? "bg-foreground text-[#f8f5f0]" : ""}
                 ${isRange ? "bg-foreground/10" : ""}
                 ${isPastDate ? "text-foreground/20" : ""}
-                ${isBookedDate && !isPastDate ? "text-foreground/30" : ""}
+                ${isBookedDate && !isPastDate && !canBeCheckout ? "text-foreground/30" : ""}
                 ${!isDisabled && !isCheckIn && !isCheckOut && !isRange ? "text-foreground/70" : ""}
               `}
             >
               <span className="relative z-10">{day}</span>
-              {/* Unavailable indicator */}
-              {isBookedDate && !isPastDate && (
+              {/* Unavailable indicator - don't show when date can be checkout */}
+              {isBookedDate && !isPastDate && !canBeCheckout && (
                 <div className="absolute inset-0 bg-foreground/10" />
               )}
             </button>
