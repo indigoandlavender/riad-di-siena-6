@@ -36,53 +36,52 @@ interface GalleryImage {
 
 // Minimal monochrome icons
 const BedIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25">
-    <rect x="1" y="8" width="18" height="8" rx="1" />
-    <path d="M3 8V5a2 2 0 012-2h10a2 2 0 012 2v3" />
-    <line x1="1" y1="16" x2="1" y2="18" />
-    <line x1="19" y1="16" x2="19" y2="18" />
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 18v-5h18v5" />
+    <path d="M3 13v-2a2 2 0 012-2h14a2 2 0 012 2v2" />
+    <circle cx="7" cy="11" r="2" />
   </svg>
 );
 
 const BathIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25">
-    <path d="M3 10h14a1 1 0 011 1v3a4 4 0 01-4 4H6a4 4 0 01-4-4v-3a1 1 0 011-1z" />
-    <path d="M4 10V5a2 2 0 012-2h1" />
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 5v15" />
+    <path d="M4 8h12a4 4 0 014 4" />
+    <path d="M14 14v2M11 15v2M17 15v2M14 19v2" />
   </svg>
 );
 
 const AcIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25">
-    <rect x="2" y="4" width="16" height="10" rx="1" />
-    <path d="M5 17c0-1.5 1-3 2.5-3s2.5 1.5 2.5 3" />
-    <path d="M10 17c0-1.5 1-3 2.5-3s2.5 1.5 2.5 3" />
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="5" width="18" height="10" rx="1" />
+    <path d="M7 18c0-1.5 1-3 2-3s2 1.5 2 3" />
+    <path d="M13 18c0-1.5 1-3 2-3s2 1.5 2 3" />
   </svg>
 );
 
 const WifiIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25">
-    <path d="M2 8c4.5-4 11.5-4 16 0" />
-    <path d="M5 11c3-2.5 7-2.5 10 0" />
-    <path d="M8 14c1.5-1 3.5-1 5 0" />
-    <circle cx="10" cy="16" r="1" fill="currentColor" />
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 10c4-4 12-4 16 0" />
+    <path d="M7 13c3-3 7-3 10 0" />
+    <path d="M10 16c1.5-1.5 2.5-1.5 4 0" />
+    <circle cx="12" cy="19" r="1" fill="currentColor" />
   </svg>
 );
 
 const TerraceIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25">
-    <rect x="2" y="10" width="16" height="7" rx="1" />
-    <path d="M2 13h16" />
-    <path d="M6 10V7" />
-    <path d="M14 10V7" />
-    <path d="M4 7h12" />
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="12" width="18" height="8" rx="1" />
+    <path d="M3 16h18" />
+    <path d="M7 12V8M17 12V8" />
+    <path d="M5 8h14" />
   </svg>
 );
 
 const SittingIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25">
-    <path d="M5 17v-5h10v5" />
-    <path d="M3 12h14" />
-    <path d="M5 12V8a2 2 0 012-2h6a2 2 0 012 2v4" />
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 18v-6h14v6" />
+    <path d="M3 12h18" />
+    <path d="M5 12V8a2 2 0 012-2h10a2 2 0 012 2v4" />
   </svg>
 );
 
