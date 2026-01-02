@@ -85,13 +85,53 @@ const SittingIcon = () => (
   </svg>
 );
 
+const SizeIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="4" y="4" width="16" height="16" rx="1" />
+    <path d="M9 4v16" />
+  </svg>
+);
+
+const ViewIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 5a7 7 0 017 7 7 7 0 01-7 7" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
+const BreakfastIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 12h10a4 4 0 010 8H5a4 4 0 010-8z" />
+    <path d="M15 14h2a2 2 0 010 4h-2" />
+    <path d="M8 12V9M10 12V8M12 12V9" />
+  </svg>
+);
+
+const LinensIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="4" y="6" width="16" height="4" rx="1" />
+    <path d="M6 10v10M18 10v10" />
+    <path d="M6 20h12" />
+  </svg>
+);
+
+const AmenitiesIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="8" y="8" width="8" height="12" rx="1" />
+    <path d="M10 8V6a2 2 0 014 0v2" />
+    <path d="M10 12h4" />
+  </svg>
+);
+
 const iconMap: Record<string, () => JSX.Element> = {
   "bed": BedIcon,
   "king": BedIcon,
   "queen": BedIcon,
+  "double": BedIcon,
   "bathroom": BathIcon,
   "en-suite": BathIcon,
   "ensuite": BathIcon,
+  "private": BathIcon,
   "air": AcIcon,
   "conditioning": AcIcon,
   "wifi": WifiIcon,
@@ -99,6 +139,22 @@ const iconMap: Record<string, () => JSX.Element> = {
   "terrace": TerraceIcon,
   "sitting": SittingIcon,
   "seating": SittingIcon,
+  "m²": SizeIcon,
+  "m2": SizeIcon,
+  "sqm": SizeIcon,
+  "25m": SizeIcon,
+  "30m": SizeIcon,
+  "20m": SizeIcon,
+  "35m": SizeIcon,
+  "40m": SizeIcon,
+  "view": ViewIcon,
+  "courtyard": ViewIcon,
+  "breakfast": BreakfastIcon,
+  "linens": LinensIcon,
+  "towels": LinensIcon,
+  "shower": AmenitiesIcon,
+  "shampoo": AmenitiesIcon,
+  "toiletries": AmenitiesIcon,
 };
 
 const getIconForFeature = (feature: string): JSX.Element | null => {
