@@ -50,7 +50,8 @@ export default function TheFarmPage() {
       <section className="min-h-screen flex items-center justify-center relative">
         {heroImage && (
           <>
-            <img src={heroImage} alt="The Farm in Atlas foothills, Morocco, part of Riad di Siena collection" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${heroImage}')` }} />
+            <img src={heroImage} alt="The Farm in Atlas foothills, Morocco, part of Riad di Siena collection" className="sr-only" aria-hidden="true" />
             <div className="absolute inset-0 bg-[#2a2520]/40" />
           </>
         )}

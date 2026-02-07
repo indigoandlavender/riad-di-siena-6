@@ -73,7 +73,7 @@ export default function TheDesertCampPage() {
   return (
     <div className="bg-[#f5f0e8] text-[#2a2520] min-h-screen">
       <section className="min-h-screen flex items-center justify-center relative">
-        {heroImage && (<><img src={heroImage} alt="Luxury Sahara desert camp at Erg Chebbi dunes, Morocco" className="absolute inset-0 w-full h-full object-cover" /><div className="absolute inset-0 bg-[#2a2520]/50" /></>)}
+        {heroImage && (<><div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${heroImage}')` }} /><img src={heroImage} alt="Luxury Sahara desert camp at Erg Chebbi dunes, Morocco" className="sr-only" aria-hidden="true" /><div className="absolute inset-0 bg-[#2a2520]/50" /></>)}
         <div className="container mx-auto px-6 lg:px-16 text-center max-w-4xl relative z-10">
           {hero?.Location && <p className="text-xs tracking-[0.4em] uppercase text-white/60 mb-8">{hero.Location}</p>}
           <h1 className="text-3xl md:text-5xl lg:text-6xl tracking-[0.15em] font-light mb-8 text-white">T H E<br />D E S E R T  C A M P</h1>

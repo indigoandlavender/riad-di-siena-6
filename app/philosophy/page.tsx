@@ -33,7 +33,8 @@ export default function PhilosophyPage() {
       <section className="min-h-screen flex items-center justify-center relative">
         {heroImage && (
           <>
-            <img src={heroImage} alt="Riad di Siena philosophy, slow hospitality in Marrakech" className="absolute inset-0 w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${heroImage}')` }} />
+            <img src={heroImage} alt="Riad di Siena philosophy, slow hospitality in Marrakech" className="sr-only" aria-hidden="true" />
             <div className="absolute inset-0 bg-[#2a2520]/40" />
           </>
         )}
