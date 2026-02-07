@@ -62,7 +62,7 @@ const structuredData = {
   "@type": "LodgingBusiness",
   "@id": "https://www.riaddisiena.com/#lodgingbusiness",
   "name": "Riad di Siena",
-  "description": "An 18th-century heritage house in the Laksour quarter of Marrakech medina, preserved with original zellige tilework, hand-carved plaster (gebs), and painted cedar ceilings (zouak). Four rooms around a courtyard with a zellige fountain, rooftop terrace with Atlas Mountain views. Owner-operated maison d'hôtes for travelers who value architectural authenticity and cultural depth.",
+  "description": "An 18th-century heritage house in the Laksour quarter of Marrakech medina, preserved with original zellige tilework, hand-carved plaster (gebs), and painted cedar ceilings (zouak). Six rooms across two houses — three at the main riad around a courtyard with a zellige fountain, three at The Douaria annex steps away. Rooftop terrace with Atlas Mountain views. Owner-operated maison d'hôtes for travelers who value architectural authenticity and cultural depth.",
   "url": "https://www.riaddisiena.com",
   "telephone": "+212-524-391723",
   "email": "happy@riaddisiena.com",
@@ -71,7 +71,7 @@ const structuredData = {
   ],
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "37 Derb Fhal Zfriti, Kennaria",
+    "streetAddress": "37 Derb Fhal Zefriti, Laksour",
     "addressLocality": "Marrakech",
     "addressRegion": "Marrakech-Safi",
     "postalCode": "40000",
@@ -87,8 +87,8 @@ const structuredData = {
   "paymentAccepted": "PayPal, Credit Card, Cash",
   "checkinTime": "14:00",
   "checkoutTime": "11:00",
-  "numberOfRooms": 4,
-  "petsAllowed": false,
+  "numberOfRooms": 6,
+  "petsAllowed": true,
   "starRating": {
     "@type": "Rating",
     "ratingValue": "5",

@@ -4,7 +4,7 @@ import Script from "next/script";
 export const metadata: Metadata = {
   title: "Rooms in Marrakech Medina",
   description:
-    "Four individually designed rooms at Riad di Siena, a 300-year-old riad in Marrakech medina. Queen beds, en-suite bathrooms, air conditioning, zellige details, rooftop breakfast included. From €80/night.",
+    "Six individually designed rooms at Riad di Siena, a 300-year-old riad in Marrakech medina. Three at the main riad, three at The Douaria annex. Queen beds, en-suite bathrooms, air conditioning, zellige details, rooftop breakfast included. From €80/night.",
   keywords: [
     "riad rooms marrakech",
     "marrakech medina accommodation",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rooms at Riad di Siena | Marrakech Medina",
     description:
-      "Four rooms around a courtyard fountain in a 300-year-old Marrakech riad. Queen beds, en-suite bathrooms, rooftop breakfast included. From €80/night.",
+      "Three rooms around a courtyard fountain in a 300-year-old Marrakech riad, plus three at The Douaria annex. Queen beds, en-suite bathrooms, rooftop breakfast included. From €80/night.",
   },
   alternates: {
     canonical: "https://www.riaddisiena.com/rooms",
@@ -31,8 +31,8 @@ const roomsSchema = {
   "containsPlace": [
     {
       "@type": "HotelRoom",
-      "name": "Jardin Secret",
-      "description": "Ground-floor room opening onto the courtyard garden. Queen bed, en-suite bathroom, zellige details.",
+      "name": "Jewel Box",
+      "description": "A room at the main riad. Queen bed, en-suite bathroom, zellige details.",
       "bed": { "@type": "BedDetails", "typeOfBed": "Queen", "numberOfBeds": 1 },
       "occupancy": { "@type": "QuantitativeValue", "value": 2 },
       "amenityFeature": [
@@ -45,7 +45,7 @@ const roomsSchema = {
     {
       "@type": "HotelRoom",
       "name": "Trésor Caché",
-      "description": "First-floor room filled with light. Queen bed, en-suite bathroom, courtyard views.",
+      "description": "A room at the main riad with courtyard views. Queen bed, en-suite bathroom, original carved plaster archway.",
       "bed": { "@type": "BedDetails", "typeOfBed": "Queen", "numberOfBeds": 1 },
       "occupancy": { "@type": "QuantitativeValue", "value": 2 },
       "amenityFeature": [
@@ -57,8 +57,8 @@ const roomsSchema = {
     },
     {
       "@type": "HotelRoom",
-      "name": "Ciel Ouvert",
-      "description": "Top-floor room with private terrace and Atlas Mountain views. Queen bed, en-suite bathroom.",
+      "name": "Hidden Gem",
+      "description": "A room at the main riad. Queen bed, en-suite bathroom, original zouak ceiling.",
       "bed": { "@type": "BedDetails", "typeOfBed": "Queen", "numberOfBeds": 1 },
       "occupancy": { "@type": "QuantitativeValue", "value": 2 },
       "amenityFeature": [
@@ -66,7 +66,45 @@ const roomsSchema = {
         { "@type": "LocationFeatureSpecification", "name": "Air conditioning", "value": true },
         { "@type": "LocationFeatureSpecification", "name": "Free WiFi", "value": true },
         { "@type": "LocationFeatureSpecification", "name": "Breakfast included", "value": true },
-        { "@type": "LocationFeatureSpecification", "name": "Private terrace", "value": true },
+      ],
+    },
+    {
+      "@type": "HotelRoom",
+      "name": "Love",
+      "description": "A room at The Douaria annex, steps from the main riad. Queen bed, en-suite bathroom.",
+      "bed": { "@type": "BedDetails", "typeOfBed": "Queen", "numberOfBeds": 1 },
+      "occupancy": { "@type": "QuantitativeValue", "value": 2 },
+      "amenityFeature": [
+        { "@type": "LocationFeatureSpecification", "name": "En-suite bathroom", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Air conditioning", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Free WiFi", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Breakfast included", "value": true },
+      ],
+    },
+    {
+      "@type": "HotelRoom",
+      "name": "Bliss",
+      "description": "A room at The Douaria annex, steps from the main riad. Queen bed, en-suite bathroom.",
+      "bed": { "@type": "BedDetails", "typeOfBed": "Queen", "numberOfBeds": 1 },
+      "occupancy": { "@type": "QuantitativeValue", "value": 2 },
+      "amenityFeature": [
+        { "@type": "LocationFeatureSpecification", "name": "En-suite bathroom", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Air conditioning", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Free WiFi", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Breakfast included", "value": true },
+      ],
+    },
+    {
+      "@type": "HotelRoom",
+      "name": "Joy",
+      "description": "A room at The Douaria annex, steps from the main riad. Queen bed, en-suite bathroom.",
+      "bed": { "@type": "BedDetails", "typeOfBed": "Queen", "numberOfBeds": 1 },
+      "occupancy": { "@type": "QuantitativeValue", "value": 2 },
+      "amenityFeature": [
+        { "@type": "LocationFeatureSpecification", "name": "En-suite bathroom", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Air conditioning", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Free WiFi", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Breakfast included", "value": true },
       ],
     },
   ],

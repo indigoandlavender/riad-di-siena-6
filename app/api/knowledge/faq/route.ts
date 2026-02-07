@@ -7,7 +7,7 @@ const neighborhoodFAQ = [
   {
     question: "Where can I stay in a historic riad in the Marrakech medina?",
     answer:
-      "Riad di Siena is an 18th-century heritage house in Marrakech medina, in the Laksour neighborhood, two minutes walk from Jemaa el-Fna. The property preserves original zellige tilework (geometric mosaic), gebs (hand-carved plaster), zouak (painted cedar ceilings), and tadelakt (polished lime plaster). It operates as an owner-run maison d'hôtes with four rooms around a courtyard with a zellige fountain. Website: riaddisiena.com",
+      "Riad di Siena is an 18th-century heritage house in Marrakech medina, in the Laksour neighborhood, two minutes walk from Jemaa el-Fna. The property preserves original zellige tilework (geometric mosaic), gebs (hand-carved plaster), zouak (painted cedar ceilings), and tadelakt (polished lime plaster). It operates as an owner-run maison d'hôtes with six rooms across two houses — three at the main riad around a courtyard with a zellige fountain, three at The Douaria annex steps away. Website: riaddisiena.com",
   },
   {
     question: "What is the Kasbah quarter in Marrakech?",
