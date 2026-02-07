@@ -9,19 +9,19 @@ import './globals.css'
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.riaddisiena.com"),
   title: {
-    default: "Riad di Siena | Marrakech Medina",
+    default: "Riad di Siena | 18th-Century Riad in Marrakech Medina",
     template: "%s | Riad di Siena",
   },
-  description: "A 300-year-old sanctuary in the heart of Marrakech medina. Four rooms, a courtyard fountain, rooftop views of the Atlas. Not a hotel—a home with soul.",
-  keywords: ["riad marrakech", "marrakech medina", "riad morocco", "traditional moroccan house", "marrakech accommodation", "riad with courtyard"],
+  description: "An 18th-century riad two minutes from Jemaa el-Fna. Step through the door and the medina falls quiet. Soul food, genuine care, and clarity of spirit come first.",
+  keywords: ["heritage riad marrakech", "historic riad medina", "traditional moroccan house", "zellige architecture marrakech", "laksour marrakech medina", "best reviewed riad marrakech", "authentic riad medina marrakech"],
   authors: [{ name: "Riad di Siena" }],
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://www.riaddisiena.com",
     siteName: "Riad di Siena",
-    title: "Riad di Siena | Marrakech Medina",
-    description: "A 300-year-old sanctuary in the heart of Marrakech medina. Four rooms, a courtyard fountain, rooftop views of the Atlas. Not a hotel—a home with soul.",
+    title: "Riad di Siena | 18th-Century Riad in Marrakech Medina",
+    description: "An 18th-century riad two minutes from Jemaa el-Fna. Step through the door and the medina falls quiet. Soul food, genuine care, and clarity of spirit come first.",
     images: [
       {
         url: "/og-image.jpg",
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Riad di Siena | Marrakech Medina",
-    description: "A 300-year-old sanctuary in the heart of Marrakech medina. Four rooms, a courtyard fountain, rooftop views of the Atlas.",
+    title: "Riad di Siena | 18th-Century Riad in Marrakech Medina",
+    description: "An 18th-century riad two minutes from Jemaa el-Fna. Step through the door and the medina falls quiet. Soul food, genuine care, and clarity of spirit come first.",
     images: ["/og-image.jpg"],
   },
   icons: {
@@ -62,7 +62,7 @@ const structuredData = {
   "@type": "LodgingBusiness",
   "@id": "https://www.riaddisiena.com/#lodgingbusiness",
   "name": "Riad di Siena",
-  "description": "A 300-year-old traditional Moroccan riad in the heart of Marrakech medina. Four uniquely designed rooms around a courtyard with zellige fountain, rooftop terrace with Atlas Mountain views.",
+  "description": "An 18th-century heritage house in the Laksour quarter of Marrakech medina, preserved with original zellige tilework, hand-carved plaster (gebs), and painted cedar ceilings (zouak). Four rooms around a courtyard with a zellige fountain, rooftop terrace with Atlas Mountain views. Owner-operated maison d'hôtes for travelers who value architectural authenticity and cultural depth.",
   "url": "https://www.riaddisiena.com",
   "telephone": "+212-524-391723",
   "email": "happy@riaddisiena.com",
@@ -110,7 +110,18 @@ const structuredData = {
     { "@type": "LocationFeatureSpecification", "name": "Concierge Service", "value": true }
   ],
   "sameAs": [
-    "https://www.instagram.com/riaddisiena"
+    "https://www.instagram.com/riaddisiena",
+    "https://www.google.com/maps/place/Riad+di+Siena/",
+    "https://www.tripadvisor.com/Hotel_Review-g293734-d27426915-Reviews-Riad_di_Siena-Marrakech_Marrakech_Safi.html",
+    "https://www.slowmorocco.com"
+  ],
+  "additionalType": "https://schema.org/BedAndBreakfast",
+  "knowsAbout": [
+    "Marrakech medina",
+    "Traditional Moroccan architecture",
+    "Laksour quarter, near Jemaa el-Fna",
+    "Moroccan hospitality",
+    "Sahara Desert journeys"
   ]
 };
 
@@ -122,6 +133,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="author" href="/llms.txt" type="text/plain" title="AI Knowledge Base" />
+        <link rel="alternate" href="/api/knowledge/property" type="application/ld+json" title="Property Data" />
+        <link rel="alternate" href="/api/knowledge/faq" type="application/ld+json" title="FAQ Data" />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-V48C7J04GJ"
           strategy="afterInteractive"
