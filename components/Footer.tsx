@@ -148,7 +148,7 @@ export default function Footer() {
               <ul className="space-y-2">
                 <li>
                   <a 
-                    href="https://slowmorocco.com/places" 
+                    href="https://www.slowmorocco.com/places" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-sand/70 text-sm hover:text-sand transition-colors"
@@ -158,7 +158,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <a 
-                    href="https://slowmorocco.com/stories" 
+                    href="https://www.slowmorocco.com/stories" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-sand/70 text-sm hover:text-sand transition-colors"
@@ -168,12 +168,22 @@ export default function Footer() {
                 </li>
                 <li>
                   <a 
-                    href="https://slowmorocco.com/day-trips" 
+                    href="https://www.slowmorocco.com/day-trips" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-sand/70 text-sm hover:text-sand transition-colors"
                   >
                     Day Trips
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="https://www.slowmorocco.com/glossary" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-sand/70 text-sm hover:text-sand transition-colors"
+                  >
+                    Moroccan Glossary
                   </a>
                 </li>
               </ul>

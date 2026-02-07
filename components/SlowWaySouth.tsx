@@ -177,7 +177,7 @@ export default function SlowWaySouth({
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
               <Link
-                href={`https://slowmorocco.com/journeys/${journeySlug}`}
+                href={`https://www.slowmorocco.com/journeys/${journeySlug}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block border border-foreground px-10 py-4 text-xs tracking-[0.2em] uppercase hover:bg-foreground hover:text-background transition-colors"
@@ -196,7 +196,7 @@ export default function SlowWaySouth({
             <p className="text-xs text-muted-foreground mb-4">
               A journey by{" "}
               <a 
-                href="https://slowmorocco.com" 
+                href="https://www.slowmorocco.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="underline hover:text-foreground transition-colors"
@@ -207,7 +207,7 @@ export default function SlowWaySouth({
 
             {/* Day Adventures Link */}
             <a 
-              href="https://slowmorocco.com/day-trips" 
+              href="https://www.slowmorocco.com/day-trips" 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-block text-xs tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground transition-colors"
