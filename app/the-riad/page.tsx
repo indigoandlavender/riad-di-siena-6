@@ -1,23 +1,7 @@
-"use client";
+import { getSections } from "@/lib/data";
 
-import { useState, useEffect } from "react";
-
-interface Section {
-  Title: string;
-  Subtitle: string;
-  Body: string;
-  Image_URL: string;
-}
-
-export default function TheRiadPage() {
-  const [content, setContent] = useState<Record<string, Section>>({});
-
-  useEffect(() => {
-    fetch("/api/sheets/the-riad")
-      .then((res) => res.json())
-      .then(setContent)
-      .catch(console.error);
-  }, []);
+export default async function TheRiadPage() {
+  const content = await getSections("the_riad");
 
   const hero = content.hero;
   const history = content.history;
@@ -142,7 +126,7 @@ export default function TheRiadPage() {
         <section className="py-16 md:py-20 border-y border-[#2a2520]/10 bg-[#f5f0e8]">
           <div className="container mx-auto px-6 lg:px-16 max-w-4xl">
             <div className="flex items-start gap-6">
-              <span className="font-serif text-6xl md:text-8xl text-[#2a2520]/20 leading-none">"</span>
+              <span className="font-serif text-6xl md:text-8xl text-[#2a2520]/20 leading-none">&quot;</span>
               <div>
                 {location?.Title && (
                   <p className="font-serif text-xl md:text-2xl leading-relaxed text-[#2a2520]/80">
@@ -159,7 +143,6 @@ export default function TheRiadPage() {
           </div>
         </section>
       )}
-
     </div>
   );
 }
