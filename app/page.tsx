@@ -73,12 +73,10 @@ export default function Home() {
       {/* Hero Section */}
       <section 
         className="relative h-screen flex items-center justify-center pt-16 bg-[hsl(var(--sand))]"
-        style={hero?.Image_URL ? {
-          backgroundImage: `url(${hero.Image_URL})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        } : undefined}
       >
+        {hero?.Image_URL && (
+          <img src={hero.Image_URL} alt="Riad di Siena, a 300-year-old traditional riad in the heart of Marrakech medina" className="absolute inset-0 w-full h-full object-cover" />
+        )}
         {/* Overlay */}
         <div className="absolute inset-0 bg-black/30" />
         {/* Content */}

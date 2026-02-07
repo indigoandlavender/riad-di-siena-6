@@ -130,10 +130,7 @@ export default function TheDouariaPage() {
       <section className="min-h-screen flex items-center justify-center relative">
         {heroImage && (
           <>
-            <div 
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: `url('${heroImage}')` }}
-            />
+            <img src={heroImage} alt="The Douaria, modern annex to Riad di Siena in Marrakech medina" className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-0 bg-[#2a2520]/40" />
           </>
         )}
