@@ -123,7 +123,7 @@ export async function replaceTemplateVariables(content: string): Promise<string>
       "{{contact_email}}": process.env.NEXT_PUBLIC_CONTACT_EMAIL || "happy@riaddisiena.com",
       "{{jurisdiction_country}}": process.env.NEXT_PUBLIC_JURISDICTION_COUNTRY || "Morocco",
       "{{jurisdiction_city}}": process.env.NEXT_PUBLIC_JURISDICTION_CITY || "Marrakech",
-      "{{address_line1}}": process.env.NEXT_PUBLIC_ADDRESS_LINE1 || "35 Derb Fhal Zfriti, Kennaria",
+      "{{address_line1}}": process.env.NEXT_PUBLIC_ADDRESS_LINE1 || "37 Derb Fhal Zefriti, Laksour",
       "{{address_line2}}": process.env.NEXT_PUBLIC_ADDRESS_LINE2 || "Marrakech 40000, Morocco",
     };
     
