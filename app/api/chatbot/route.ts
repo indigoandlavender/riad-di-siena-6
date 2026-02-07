@@ -1,19 +1,19 @@
 import { NextResponse } from "next/server";
-import { getSheetData, rowsToObjects } from "@/lib/sheets";
+import { getTableData } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
 interface TrainingItem {
-  Category: string;
-  Question: string;
-  Answer: string;
-  Answer_FR?: string;
-  Answer_ES?: string;
-  Answer_IT?: string;
-  Answer_PT?: string;
-  Answer_AR?: string;
-  Keywords: string;
-  Order: string;
+  category: string;
+  question: string;
+  answer: string;
+  answer_fr?: string;
+  answer_es?: string;
+  answer_it?: string;
+  answer_pt?: string;
+  answer_ar?: string;
+  keywords: string;
+  order: number;
 }
 
 interface ChatRequest {
@@ -22,19 +22,17 @@ interface ChatRequest {
   history?: { role: string; content: string }[];
 }
 
-// Get answer in the requested language
 function getLocalizedAnswer(item: TrainingItem, language: string): string {
   switch (language) {
-    case "fr": return item.Answer_FR || item.Answer;
-    case "es": return item.Answer_ES || item.Answer;
-    case "it": return item.Answer_IT || item.Answer;
-    case "pt": return item.Answer_PT || item.Answer;
-    case "ar": return item.Answer_AR || item.Answer;
-    default: return item.Answer;
+    case "fr": return item.answer_fr || item.answer;
+    case "es": return item.answer_es || item.answer;
+    case "it": return item.answer_it || item.answer;
+    case "pt": return item.answer_pt || item.answer;
+    case "ar": return item.answer_ar || item.answer;
+    default: return item.answer;
   }
 }
 
-// Simple keyword matching to find relevant answers
 function findBestMatch(query: string, training: TrainingItem[]): TrainingItem | null {
   const queryLower = query.toLowerCase();
   const queryWords = queryLower.split(/\s+/);
@@ -45,19 +43,15 @@ function findBestMatch(query: string, training: TrainingItem[]): TrainingItem | 
   for (const item of training) {
     let score = 0;
     
-    // Check keywords
-    if (item.Keywords) {
-      const keywords = item.Keywords.toLowerCase().split(",").map(k => k.trim());
+    if (item.keywords) {
+      const keywords = item.keywords.toLowerCase().split(",").map(k => k.trim());
       for (const keyword of keywords) {
-        if (queryLower.includes(keyword)) {
-          score += 3; // Higher weight for keyword matches
-        }
+        if (queryLower.includes(keyword)) score += 3;
       }
     }
     
-    // Check question similarity
-    if (item.Question) {
-      const questionWords = item.Question.toLowerCase().split(/\s+/);
+    if (item.question) {
+      const questionWords = item.question.toLowerCase().split(/\s+/);
       for (const word of queryWords) {
         if (word.length > 2 && questionWords.some(qw => qw.includes(word) || word.includes(qw))) {
           score += 1;
@@ -65,8 +59,7 @@ function findBestMatch(query: string, training: TrainingItem[]): TrainingItem | 
       }
     }
     
-    // Check if query contains category
-    if (item.Category && queryLower.includes(item.Category.toLowerCase())) {
+    if (item.category && queryLower.includes(item.category.toLowerCase())) {
       score += 2;
     }
 
@@ -76,19 +69,13 @@ function findBestMatch(query: string, training: TrainingItem[]): TrainingItem | 
     }
   }
 
-  // Only return if we have a reasonable match
   return bestScore >= 2 ? bestMatch : null;
 }
 
 export async function GET() {
   try {
-    const rows = await getSheetData("Chatbot_Training");
-    const training = rowsToObjects<TrainingItem>(rows);
-    
-    // Return training data (for debugging or client-side use)
-    return NextResponse.json({ 
-      training: training.sort((a, b) => parseInt(a.Order || "0") - parseInt(b.Order || "0"))
-    });
+    const training = await getTableData<TrainingItem>("chatbot_training", "order");
+    return NextResponse.json({ training });
   } catch (error) {
     console.error("Error fetching chatbot training:", error);
     return NextResponse.json({ training: [] }, { status: 500 });
@@ -97,21 +84,16 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const { message, language = "en", history }: ChatRequest = await request.json();
+    const { message, language = "en" }: ChatRequest = await request.json();
     
     if (!message) {
       return NextResponse.json({ error: "Message required" }, { status: 400 });
     }
 
-    // Fetch training data
-    const rows = await getSheetData("Chatbot_Training");
-    const training = rowsToObjects<TrainingItem>(rows);
+    const training = await getTableData<TrainingItem>("chatbot_training", "order");
     
-    // Get system prompt / personality from training data
-    const systemItem = training.find(t => t.Category?.toLowerCase() === "system");
-    const greetingItem = training.find(t => t.Category?.toLowerCase() === "greeting");
+    const greetingItem = training.find(t => t.category?.toLowerCase() === "greeting");
     
-    // Check for greeting
     const greetingWords = ["hi", "hello", "hey", "good morning", "good afternoon", "good evening", "salaam", "bonjour", "hola", "ciao", "olá", "مرحبا", "السلام عليكم"];
     const isGreeting = greetingWords.some(g => message.toLowerCase().trim().startsWith(g));
     
@@ -122,19 +104,17 @@ export async function POST(request: Request) {
       });
     }
 
-    // Find best matching answer
-    const match = findBestMatch(message, training.filter(t => t.Category?.toLowerCase() !== "system"));
+    const match = findBestMatch(message, training.filter(t => t.category?.toLowerCase() !== "system"));
     
     if (match) {
       return NextResponse.json({ 
         response: getLocalizedAnswer(match, language),
-        category: match.Category,
-        matched_question: match.Question
+        category: match.category,
+        matched_question: match.question
       });
     }
 
-    // Default fallback response
-    const fallbackItem = training.find(t => t.Category?.toLowerCase() === "fallback");
+    const fallbackItem = training.find(t => t.category?.toLowerCase() === "fallback");
     const fallbackResponse = fallbackItem 
       ? getLocalizedAnswer(fallbackItem, language)
       : "I'd be happy to help you with that. For specific inquiries about rooms, availability, or bookings, please reach out to us directly through our contact page or WhatsApp. Is there anything else about Riad di Siena I can help you with?";

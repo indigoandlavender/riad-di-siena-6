@@ -1,54 +1,60 @@
 import { NextResponse } from "next/server";
-import { getSheetData, rowsToObjects, convertDriveUrl, getAllSettings, getNexusData } from "@/lib/sheets";
+import {
+  getTableData,
+  getAllSettings,
+  convertDriveUrl,
+} from "@/lib/supabase";
+import { getNexusSheetData, rowsToObjects as nexusRowsToObjects } from "@/lib/nexus";
 
 export const revalidate = 0;
 
-// Sheet name mapping (URL param -> actual sheet name)
-const SHEET_MAP: Record<string, string> = {
-  "amenities": "Amenities",
-  "amenities-hero": "Amenities_Hero",
-  "beyond-the-walls": "Beyond_the_Walls",
-  "beyond-the-walls-hero": "Beyond_the_Walls_Hero",
-  "booking-conditions": "Booking_Conditions",
-  "content": "Content",
-  "desert-content": "Desert_Content",
-  "desert-gallery": "Desert_Gallery",
-  "desert-hero": "Desert_Hero",
-  "desert-tents": "Desert_Tents",
-  "directions": "Directions",
-  "directions-settings": "Directions_Settings",
-  "disclaimer": "Disclaimer",
-  "douaria-content": "Douaria_Content",
-  "douaria-gallery": "Douaria_Gallery",
-  "douaria-hero": "Douaria_Hero",
-  "douaria-rooms": "Douaria_Rooms",
-  "faq": "FAQ",
-  "farm-content": "Farm_Content",
-  "farm-hero": "Farm_Hero",
-  "farm-produce": "Farm_Produce",
-  "home": "Home",
-  "house-rules": "House_Rules",
-  "journeys": "Journeys_Page",
-  "kasbah-content": "Kasbah_Content",
-  "kasbah-experience": "Kasbah_Experience",
-  "kasbah-gallery": "Kasbah_Gallery",
-  "kasbah-hero": "Kasbah_Hero",
-  "philosophy": "Philosophy",
-  "privacy": "Privacy_Policy",
-  "rooms": "Rooms",
-  "rooms-gallery": "Rooms_Gallery",
-  "rooms-hero": "Rooms_Hero",
-  "settings": "Settings",
-  "terms": "Terms",
-  "testimonials": "Testimonials",
-  "the-riad": "The_Riad",
-  // Nexus sheets
-  "nexus-footer": "Footer",
-  "nexus-legal": "Legal_Pages",
+// ============================================================
+// Table mapping: URL slug → Supabase table name
+// ============================================================
+const TABLE_MAP: Record<string, string> = {
+  "amenities": "amenities",
+  "amenities-hero": "amenities_hero",
+  "beyond-the-walls": "beyond_the_walls",
+  "beyond-the-walls-hero": "beyond_the_walls_hero",
+  "booking-conditions": "booking_conditions",
+  "desert-content": "desert_content",
+  "desert-gallery": "desert_gallery",
+  "desert-hero": "desert_hero",
+  "desert-tents": "desert_tents",
+  "directions": "directions",
+  "directions-settings": "directions_settings",
+  "disclaimer": "disclaimer",
+  "douaria-content": "douaria_content",
+  "douaria-gallery": "douaria_gallery",
+  "douaria-hero": "douaria_hero",
+  "douaria-rooms": "douaria_rooms",
+  "faq": "faq",
+  "farm-content": "farm_content",
+  "farm-hero": "farm_hero",
+  "farm-produce": "farm_produce",
+  "home": "home",
+  "house-rules": "house_rules",
+  "journeys": "journeys_page",
+  "kasbah-content": "kasbah_content",
+  "kasbah-experience": "kasbah_experience",
+  "kasbah-gallery": "kasbah_gallery",
+  "kasbah-hero": "kasbah_hero",
+  "philosophy": "philosophy",
+  "privacy": "privacy_policy",
+  "rooms": "rooms",
+  "rooms-gallery": "rooms_gallery",
+  "rooms-hero": "rooms_hero",
+  "settings": "settings",
+  "terms": "terms",
+  "testimonials": "testimonials",
+  "the-riad": "the_riad",
+  // Nexus sheets (still on Google Sheets)
+  "nexus-footer": "__nexus__",
+  "nexus-legal": "__nexus__",
 };
 
-// Fields that contain image URLs and need conversion
-const IMAGE_FIELDS = ["Image_URL", "heroImage", "image_url", "image"];
+// Fields containing Google Drive image URLs that need conversion
+const IMAGE_FIELDS = ["image_url"];
 
 function processImageUrls(obj: Record<string, any>): Record<string, any> {
   const processed = { ...obj };
@@ -60,39 +66,94 @@ function processImageUrls(obj: Record<string, any>): Record<string, any> {
   return processed;
 }
 
+/**
+ * Remap Supabase snake_case keys to the PascalCase keys the frontend expects.
+ * The frontend fetches `/api/sheets/rooms` and reads `Room_ID`, `Image_URL`, etc.
+ */
+function remapKeys(obj: Record<string, any>): Record<string, any> {
+  const MAP: Record<string, string> = {
+    room_id: "Room_ID", name: "Name", description: "Description",
+    price_eur: "Price_EUR", features: "Features", image_url: "Image_URL",
+    widget_id: "Widget_ID", ical_url: "iCal_URL", order: "Order",
+    bookable: "Bookable", section: "Section", title: "Title",
+    subtitle: "Subtitle", body: "Body", button_text: "Button_Text",
+    button_link: "Button_Link", content: "Content", question: "Question",
+    answer: "Answer", amenity_id: "Amenity_ID",
+    testimonial_id: "Testimonial_ID", guest_name: "Guest_Name",
+    quote: "Quote", source: "Source", date: "Date", featured: "Featured",
+    property_id: "Property_ID", tagline: "Tagline", link: "Link",
+    intro: "Intro", location: "Location", paragraph: "Paragraph",
+    package_id: "Package_ID", extra_person_eur: "Extra_Person_EUR",
+    duration: "Duration", includes: "Includes", min_guests: "Min_Guests",
+    tent_id: "Tent_ID", level: "Level", produce_id: "Produce_ID",
+    season: "Season", image_id: "Image_ID", caption: "Caption",
+    step_number: "Step_Number", building: "Building",
+    caption_fr: "Caption_FR", caption_es: "Caption_ES",
+    caption_it: "Caption_IT", caption_pt: "Caption_PT",
+    caption_ar: "Caption_AR",
+    key: "Key", value: "Value",
+    en: "EN", fr: "FR", es: "ES", it: "IT", pt: "PT", ar: "AR",
+    category: "Category", answer_fr: "Answer_FR", answer_es: "Answer_ES",
+    answer_it: "Answer_IT", answer_pt: "Answer_PT", answer_ar: "Answer_AR",
+    keywords: "Keywords",
+    booking_id: "Booking_ID", timestamp: "Timestamp", email: "Email",
+    phone: "Phone", check_in: "Check_In", check_out: "Check_Out",
+    guests: "Guests", room_preference: "Room_Preference",
+    message: "Message", status: "Status",
+  };
+
+  const result: Record<string, any> = {};
+  for (const [k, v] of Object.entries(obj)) {
+    if (k === "id") continue; // Skip Supabase auto-increment id
+    const mappedKey = MAP[k] || k;
+    result[mappedKey] = v;
+  }
+  return result;
+}
+
+function toFrontend(obj: Record<string, any>): Record<string, any> {
+  return remapKeys(processImageUrls(obj));
+}
+
+// ============================================================
+// Route handler
+// ============================================================
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ sheet: string }> }
 ) {
   try {
     const { sheet } = await params;
-    const sheetName = SHEET_MAP[sheet];
-    
-    if (!sheetName) {
+    const table = TABLE_MAP[sheet];
+
+    if (!table) {
       return NextResponse.json({ error: "Unknown sheet" }, { status: 404 });
     }
 
-    // Handle Nexus sheets separately
+    // Nexus sheets still go through Google Sheets
     if (sheet.startsWith("nexus-")) {
-      return handleNexusSheet(request, sheet, sheetName);
+      return handleNexusSheet(request, sheet);
     }
 
-    // Handle special cases
+    // Special handlers for sheets with custom response shapes
     switch (sheet) {
       case "settings":
         return handleSettings();
       case "rooms":
-        return handleRooms();
+        return handleRooms("rooms");
+      case "douaria-rooms":
+        return handleRooms("douaria_rooms");
       case "the-riad":
-        return handleTheRiad();
+        return handleSectioned("the_riad");
+      case "home":
+        return handleSectioned("home");
+      case "philosophy":
+        return handleSectioned("philosophy");
       case "directions":
         return handleDirections();
-      case "home":
-        return handleHome();
-      case "philosophy":
-        return handleSectionedSheet("Philosophy");
       default:
-        return handleGenericSheet(sheetName);
+        return handleGeneric(sheet, table);
     }
   } catch (error: any) {
     console.error("API sheets error:", error);
@@ -100,147 +161,107 @@ export async function GET(
   }
 }
 
-async function handleGenericSheet(sheetName: string) {
-  const rows = await getSheetData(sheetName);
-  const data = rowsToObjects<Record<string, any>>(rows);
-  const processed = data.map(processImageUrls);
-  
-  // Sort by Order field if present
-  if (processed.length > 0 && "Order" in processed[0]) {
-    processed.sort((a, b) => parseInt(a.Order || "0") - parseInt(b.Order || "0"));
-  }
-  
-  // Return first item for "hero" sheets
-  if (sheetName.toLowerCase().includes("hero")) {
+// ============================================================
+// Handlers — each returns the same JSON shape as the old Sheets version
+// ============================================================
+
+async function handleGeneric(sheet: string, table: string) {
+  const data = await getTableData(table, "order");
+  const processed = data.map(toFrontend);
+
+  // Return first item for "hero" sheets (single-object response)
+  if (sheet.includes("hero")) {
     return NextResponse.json(processed[0] || {});
   }
-  
+
   return NextResponse.json(processed);
 }
 
 async function handleSettings() {
+  // Frontend expects flat { key: value } object
   const settings = await getAllSettings();
   return NextResponse.json(settings);
 }
 
-async function handleHome() {
-  const rows = await getSheetData("Home");
-  const data = rowsToObjects<Record<string, any>>(rows);
-  
-  // Convert to object keyed by Section
+async function handleSectioned(table: string) {
+  // Frontend expects { sectionName: { Section, Title, ... }, ... }
+  const data = await getTableData(table, "order");
   const sections: Record<string, any> = {};
-  data.forEach((item) => {
-    if (item.Section) {
-      sections[item.Section] = {
-        ...item,
-        Image_URL: convertDriveUrl(item.Image_URL || ""),
-      };
+  data.forEach((item: any) => {
+    if (item.section) {
+      sections[item.section] = toFrontend(item);
     }
   });
-  
   return NextResponse.json(sections);
 }
 
-// Generic handler for sheets that use Section column as key
-async function handleSectionedSheet(sheetName: string) {
-  const rows = await getSheetData(sheetName);
-  const data = rowsToObjects<Record<string, any>>(rows);
-  
-  // Convert to object keyed by Section
-  const sections: Record<string, any> = {};
-  data.forEach((item) => {
-    if (item.Section) {
-      sections[item.Section] = {
-        ...item,
-        Image_URL: convertDriveUrl(item.Image_URL || ""),
-      };
-    }
+async function handleRooms(table: string) {
+  const data = await getTableData(table, "order");
+  const processed = data.map((room: any) => {
+    const mapped = toFrontend(room);
+    // Split features string into array (frontend expects this)
+    mapped.features = room.features
+      ? room.features.split(",").map((f: string) => f.trim())
+      : [];
+    return mapped;
   });
-  
-  return NextResponse.json(sections);
-}
-
-async function handleRooms() {
-  const rows = await getSheetData("Rooms");
-  const rooms = rowsToObjects<Record<string, any>>(rows);
-  
-  const processed = rooms.map((room) => ({
-    ...room,
-    Image_URL: convertDriveUrl(room.Image_URL || ""),
-    features: room.Features ? room.Features.split(",").map((f: string) => f.trim()) : [],
-  }));
-  
   return NextResponse.json(processed);
 }
 
-async function handleTheRiad() {
-  const rows = await getSheetData("The_Riad");
-  const data = rowsToObjects<Record<string, any>>(rows);
-  
-  // Convert to object keyed by Section (like handleHome)
-  const sections: Record<string, any> = {};
-  data.forEach((item) => {
-    if (item.Section) {
-      sections[item.Section] = {
-        ...item,
-        Image_URL: convertDriveUrl(item.Image_URL || ""),
-      };
-    }
-  });
-  
-  return NextResponse.json(sections);
-}
-
 async function handleDirections() {
-  const rows = await getSheetData("Directions");
-  const directions = rowsToObjects<Record<string, any>>(rows);
-  
-  // Group by building
+  const data = await getTableData("directions");
+  const processed = data.map(toFrontend);
+
+  // Group by building (frontend expects { main: [...], annex: [...] })
   const byBuilding: Record<string, any[]> = {};
-  directions.forEach((d) => {
+  processed.forEach((d: any) => {
     const building = d.Building || "main";
     if (!byBuilding[building]) byBuilding[building] = [];
-    byBuilding[building].push({
-      ...d,
-      Image_URL: convertDriveUrl(d.Image_URL || ""),
-    });
+    byBuilding[building].push(d);
   });
-  
-  // Sort each building's steps by Order
+
   Object.keys(byBuilding).forEach((building) => {
-    byBuilding[building].sort((a, b) => parseInt(a.Order || "0") - parseInt(b.Order || "0"));
+    byBuilding[building].sort(
+      (a: any, b: any) =>
+        parseInt(a.Step_Number || "0") - parseInt(b.Step_Number || "0")
+    );
   });
-  
+
   return NextResponse.json(byBuilding);
 }
 
-async function handleNexusSheet(request: Request, sheet: string, sheetName: string) {
+// ============================================================
+// Nexus handlers (Google Sheets — unchanged)
+// ============================================================
+
+async function handleNexusSheet(request: Request, sheet: string) {
   if (sheet === "nexus-footer") {
-    // Return footer config
-    const rows = await getNexusData("Footer");
+    // Old code used getNexusData("Footer") — keep the same tab name
+    const rows = await getNexusSheetData("Footer");
     if (rows.length < 2) {
       return NextResponse.json({ success: false });
     }
-    
-    // Simple key-value parsing
-    const data = rowsToObjects<Record<string, any>>(rows);
+    const data = nexusRowsToObjects<Record<string, any>>(rows);
     return NextResponse.json({ success: true, data });
   }
-  
+
   if (sheet === "nexus-legal") {
     const { searchParams } = new URL(request.url);
     const page = searchParams.get("page");
-    
-    const rows = await getNexusData("Legal_Pages");
-    const pages = rowsToObjects<Record<string, any>>(rows);
-    
+
+    // Old code used getNexusData("Legal_Pages") — keep the same tab name
+    const rows = await getNexusSheetData("Legal_Pages");
+    const pages = nexusRowsToObjects<Record<string, any>>(rows);
+
     if (page) {
-      const found = pages.find((p) => p.slug === page || p.Slug === page);
+      const found = pages.find(
+        (p) => p.slug === page || p.Slug === page || p.page_id === page
+      );
       return NextResponse.json(found || { error: "Page not found" });
     }
-    
+
     return NextResponse.json(pages);
   }
-  
+
   return NextResponse.json({ error: "Unknown Nexus sheet" }, { status: 404 });
 }

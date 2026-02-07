@@ -1,65 +1,48 @@
 import { NextResponse } from "next/server";
-import { getSheetData, rowsToObjects, appendToSheet } from "@/lib/sheets";
+import { getTableData, insertRow } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const rows = await getSheetData("Bookings");
-    const rawBookings = rowsToObjects(rows);
+    const rawBookings = await getTableData("bookings");
     
-    // Parse the bookings data - handle both old and new format
     const bookings = rawBookings.map((row: any) => {
-      // If there's a Booking_Data column with JSON, parse it and merge
-      if (row.Booking_Data) {
+      // If there's a booking_data column with JSON, parse it and merge
+      if (row.booking_data) {
         try {
-          const bookingData = JSON.parse(row.Booking_Data);
+          const bookingData = JSON.parse(row.booking_data);
           return {
-            Booking_ID: row.Booking_ID,
-            Timestamp: row.Timestamp,
+            Booking_ID: row.booking_id,
+            Timestamp: row.timestamp,
             ...bookingData,
           };
         } catch {
-          // If JSON parsing fails, return raw row
-          return {
-            Booking_ID: row.Booking_ID,
-            Timestamp: row.Timestamp,
-            firstName: row.First_Name || row.firstName || "",
-            lastName: row.Last_Name || row.lastName || "",
-            email: row.Email || row.email || "",
-            phone: row.Phone || row.phone || "",
-            checkIn: row.Check_In || row.checkIn || "",
-            checkOut: row.Check_Out || row.checkOut || "",
-            guests: row.Guests || row.guests || "",
-            total: row.Total || row.total || "",
-            paypalStatus: row.PayPal_Status || row.paypalStatus || row.Status || "PENDING",
-            paypalOrderId: row.PayPal_Order_ID || row.paypalOrderId || "",
-            room: row.Room || row.room || "",
-            property: row.Property || row.property || "Riad di Siena",
-            source: row.Source || row.source || "",
-            notes: row.Notes || row.notes || "",
-          };
+          // Fall through to manual mapping
         }
       }
       
-      // Handle rows without Booking_Data (old format or simple rows)
       return {
-        Booking_ID: row.Booking_ID,
-        Timestamp: row.Timestamp,
-        firstName: row.First_Name || row.firstName || "",
-        lastName: row.Last_Name || row.lastName || "",
-        email: row.Email || row.email || "",
-        phone: row.Phone || row.phone || "",
-        checkIn: row.Check_In || row.checkIn || "",
-        checkOut: row.Check_Out || row.checkOut || "",
-        guests: row.Guests || row.guests || "",
-        total: row.Total || row.total || "",
-        paypalStatus: row.PayPal_Status || row.paypalStatus || row.Status || "PENDING",
-        paypalOrderId: row.PayPal_Order_ID || row.paypalOrderId || "",
-        room: row.Room || row.room || "",
-        property: row.Property || row.property || "Riad di Siena",
-        source: row.Source || row.source || "",
-        notes: row.Notes || row.notes || "",
+        Booking_ID: row.booking_id || row.Booking_ID,
+        Timestamp: row.timestamp || row.Timestamp,
+        firstName: row.first_name || row.firstName || "",
+        lastName: row.last_name || row.lastName || "",
+        email: row.email || row.Email || "",
+        phone: row.phone || row.Phone || "",
+        checkIn: row.check_in || row.checkIn || "",
+        checkOut: row.check_out || row.checkOut || "",
+        guests: row.guests || row.Guests || "",
+        total: row.total || row.Total || "",
+        paypalStatus: row.paypal_status || row.paypalStatus || row.status || "PENDING",
+        paypalOrderId: row.paypal_order_id || row.paypalOrderId || "",
+        room: row.room || row.Room || "",
+        property: row.property || row.Property || "Riad di Siena",
+        source: row.source || row.Source || "",
+        notes: row.notes || row.Notes || "",
+        // Also pass through the original message/room_preference for old-format bookings
+        message: row.message || row.Message || "",
+        name: row.name || row.Name || "",
+        room_preference: row.room_preference || row.Room_Preference || "",
       };
     });
 
@@ -74,7 +57,6 @@ export async function POST(request: Request) {
   try {
     const data = await request.json();
     
-    // Create booking data object
     const bookingData = {
       property: data.property || "",
       room: data.room || "",
@@ -91,14 +73,16 @@ export async function POST(request: Request) {
       notes: data.notes || "",
     };
 
-    // Append to sheet
-    await appendToSheet("Bookings", [[
-      data.Booking_ID || `MANUAL-${Date.now()}`,
-      data.Timestamp || new Date().toISOString(),
-      JSON.stringify(bookingData),
-    ]]);
+    const success = await insertRow("bookings", {
+      booking_id: data.Booking_ID || `MANUAL-${Date.now()}`,
+      timestamp: data.Timestamp || new Date().toISOString(),
+      booking_data: JSON.stringify(bookingData),
+    });
 
-    return NextResponse.json({ success: true, booking_id: data.Booking_ID });
+    if (success) {
+      return NextResponse.json({ success: true, booking_id: data.Booking_ID });
+    }
+    return NextResponse.json({ error: "Failed to add booking" }, { status: 500 });
   } catch (error) {
     console.error("Failed to add booking:", error);
     return NextResponse.json({ error: "Failed to add booking" }, { status: 500 });
