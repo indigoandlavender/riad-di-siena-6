@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Everything you need to know about staying at Riad di Siena in Marrakech.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/faq",
+    canonical: "https://www.riaddisiena.com/faq",
   },
 };
 

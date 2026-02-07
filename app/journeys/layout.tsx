@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Curated Morocco journeys. Marrakech to Sahara through Atlas Mountains and Draa Valley.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/journeys",
+    canonical: "https://www.riaddisiena.com/journeys",
   },
 };
 

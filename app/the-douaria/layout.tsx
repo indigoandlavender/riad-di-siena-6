@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Modern annex with private rooftop terrace in Marrakech medina. Three contemporary rooms.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/the-douaria",
+    canonical: "https://www.riaddisiena.com/the-douaria",
   },
 };
 

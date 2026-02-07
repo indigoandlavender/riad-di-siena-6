@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Luxury Sahara desert camp at Erg Chebbi. Traditional tents, camel treks, stargazing.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/the-desert-camp",
+    canonical: "https://www.riaddisiena.com/the-desert-camp",
   },
 };
 

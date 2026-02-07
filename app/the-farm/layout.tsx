@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Working farm in the Atlas foothills. Organic gardens and mountain hospitality.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/the-farm",
+    canonical: "https://www.riaddisiena.com/the-farm",
   },
 };
 

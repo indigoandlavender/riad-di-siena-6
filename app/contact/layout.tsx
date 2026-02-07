@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Contact Riad di Siena in Marrakech. Email or WhatsApp for reservations and questions.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/contact",
+    canonical: "https://www.riaddisiena.com/contact",
   },
 };
 

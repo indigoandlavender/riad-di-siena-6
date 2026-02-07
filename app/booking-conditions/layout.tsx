@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Booking conditions and cancellation policy for Riad di Siena.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/booking-conditions",
+    canonical: "https://www.riaddisiena.com/booking-conditions",
   },
   robots: {
     index: true,

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "House rules for staying at Riad di Siena in Marrakech.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/house-rules",
+    canonical: "https://www.riaddisiena.com/house-rules",
   },
   robots: {
     index: true,

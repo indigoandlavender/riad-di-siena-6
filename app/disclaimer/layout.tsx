@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Website disclaimer for Riad di Siena.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/disclaimer",
+    canonical: "https://www.riaddisiena.com/disclaimer",
   },
   robots: {
     index: true,

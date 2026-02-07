@@ -7,7 +7,7 @@ import Chatbot from '@/components/Chatbot'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://riaddisiena.com"),
+  metadataBase: new URL("https://www.riaddisiena.com"),
   title: {
     default: "Riad di Siena | Marrakech Medina",
     template: "%s | Riad di Siena",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://riaddisiena.com",
+    url: "https://www.riaddisiena.com",
     siteName: "Riad di Siena",
     title: "Riad di Siena | Marrakech Medina",
     description: "A 300-year-old sanctuary in the heart of Marrakech medina. Four rooms, a courtyard fountain, rooftop views of the Atlas. Not a hotel—a home with soul.",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
   alternates: {
-    canonical: "https://riaddisiena.com",
+    canonical: "https://www.riaddisiena.com",
   },
   robots: {
     index: true,
@@ -60,14 +60,14 @@ export const metadata: Metadata = {
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "LodgingBusiness",
-  "@id": "https://riaddisiena.com/#lodgingbusiness",
+  "@id": "https://www.riaddisiena.com/#lodgingbusiness",
   "name": "Riad di Siena",
   "description": "A 300-year-old traditional Moroccan riad in the heart of Marrakech medina. Four uniquely designed rooms around a courtyard with zellige fountain, rooftop terrace with Atlas Mountain views.",
-  "url": "https://riaddisiena.com",
+  "url": "https://www.riaddisiena.com",
   "telephone": "+212-524-391723",
   "email": "happy@riaddisiena.com",
   "image": [
-    "https://riaddisiena.com/og-image.jpg"
+    "https://www.riaddisiena.com/og-image.jpg"
   ],
   "address": {
     "@type": "PostalAddress",

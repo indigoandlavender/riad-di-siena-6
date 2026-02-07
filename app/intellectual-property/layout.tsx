@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Intellectual property and copyright information for Riad di Siena.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/intellectual-property",
+    canonical: "https://www.riaddisiena.com/intellectual-property",
   },
   robots: {
     index: true,

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Terms of service for Riad di Siena website and bookings.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/terms",
+    canonical: "https://www.riaddisiena.com/terms",
   },
   robots: {
     index: true,

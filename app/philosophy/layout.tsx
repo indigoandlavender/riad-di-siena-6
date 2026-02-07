@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Slow hospitality, authentic experiences, and the art of Moroccan welcome.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/philosophy",
+    canonical: "https://www.riaddisiena.com/philosophy",
   },
 };
 

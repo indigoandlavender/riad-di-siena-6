@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Four individually designed rooms around a courtyard fountain. Queen beds, en-suite bathrooms, rooftop breakfast included.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/rooms",
+    canonical: "https://www.riaddisiena.com/rooms",
   },
 };
 

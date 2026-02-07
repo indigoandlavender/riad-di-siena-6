@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "How to find Riad di Siena in Marrakech medina. Step-by-step directions and GPS coordinates.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/directions",
+    canonical: "https://www.riaddisiena.com/directions",
   },
 };
 

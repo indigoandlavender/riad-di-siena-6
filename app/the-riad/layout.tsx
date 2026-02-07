@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "A 300-year-old house in Marrakech medina. Original tilework, carved plaster, and a courtyard with three centuries of history.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/the-riad",
+    canonical: "https://www.riaddisiena.com/the-riad",
   },
 };
 

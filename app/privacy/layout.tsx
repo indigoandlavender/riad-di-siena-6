@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "How Riad di Siena protects your personal information.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/privacy",
+    canonical: "https://www.riaddisiena.com/privacy",
   },
   robots: {
     index: true,

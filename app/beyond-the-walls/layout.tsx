@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "Explore Morocco beyond Marrakech. Kasbah, desert camps, Atlas retreats.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/beyond-the-walls",
+    canonical: "https://www.riaddisiena.com/beyond-the-walls",
   },
 };
 

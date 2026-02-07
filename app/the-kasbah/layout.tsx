@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     description: "500-year-old fortified house in Morocco's Draa Valley. Palm groves, mud-brick walls, silence.",
   },
   alternates: {
-    canonical: "https://riaddisiena.com/the-kasbah",
+    canonical: "https://www.riaddisiena.com/the-kasbah",
   },
 };
 
