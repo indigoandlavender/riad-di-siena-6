@@ -118,7 +118,7 @@ export async function replaceTemplateVariables(content: string): Promise<string>
     // Fallback to env vars if Nexus unavailable
     const fallbackVars: Record<string, string> = {
       "{{site_name}}": process.env.NEXT_PUBLIC_SITE_NAME || "Riad di Siena",
-      "{{site_url}}": process.env.NEXT_PUBLIC_SITE_URL || "https://riaddisiena.com",
+      "{{site_url}}": process.env.NEXT_PUBLIC_SITE_URL || "https://www.riaddisiena.com",
       "{{legal_entity}}": process.env.NEXT_PUBLIC_LEGAL_ENTITY || "Riad di Siena",
       "{{contact_email}}": process.env.NEXT_PUBLIC_CONTACT_EMAIL || "happy@riaddisiena.com",
       "{{jurisdiction_country}}": process.env.NEXT_PUBLIC_JURISDICTION_COUNTRY || "Morocco",

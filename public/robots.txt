@@ -1,5 +1,5 @@
 # Robots.txt for Riad di Siena
-# https://riaddisiena.com
+# https://www.riaddisiena.com
 
 User-agent: *
 Allow: /
@@ -9,4 +9,4 @@ Disallow: /admin/
 Disallow: /api/
 
 # Sitemap location
-Sitemap: https://riaddisiena.com/sitemap.xml
+Sitemap: https://www.riaddisiena.com/sitemap.xml
