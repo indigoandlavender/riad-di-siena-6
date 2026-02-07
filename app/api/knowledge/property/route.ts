@@ -246,7 +246,7 @@ export async function GET(request: Request) {
         license: "https://creativecommons.org/licenses/by-nc-nd/4.0/",
         facts,
         totalFacts: facts.length,
-        categories: [...new Set(citableFacts.map((f) => f.category))],
+        categories: Array.from(new Set(citableFacts.map((f) => f.category))),
       },
       {
         headers: {
