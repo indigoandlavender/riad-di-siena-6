@@ -513,7 +513,7 @@ function BookingModalContent({
 
     Promise.all(promises).then(() => {
       // Deduplicate
-      setBookedDates([...new Set(allDates)]);
+      setBookedDates(Array.from(new Set(allDates)));
     });
   }, [item.iCalURL, item.name]);
 
