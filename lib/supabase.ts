@@ -20,7 +20,7 @@ function getPublicClient(): SupabaseClient {
 
 // Service client (for write operations — bookings, admin)
 let serviceClient: SupabaseClient | null = null;
-function getServiceClient(): SupabaseClient {
+export function getServiceClient(): SupabaseClient {
   if (!serviceClient) {
     const key = SUPABASE_SERVICE_KEY || SUPABASE_ANON_KEY;
     serviceClient = createClient(SUPABASE_URL, key);

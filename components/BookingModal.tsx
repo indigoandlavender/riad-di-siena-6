@@ -470,27 +470,52 @@ function BookingModalContent({
   const maxGuests = maxGuestsPerUnit * units;
   const baseGuests = baseGuestsPerUnit * units;
 
-  // Fetch booked dates from iCal
+  // Fetch booked dates from iCal + Supabase (website bookings)
   useEffect(() => {
+    const allDates: string[] = [];
+
+    const expandRange = (start: string, end: string) => {
+      const s = new Date(start);
+      const e = new Date(end);
+      for (let d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
+        allDates.push(d.toISOString().split("T")[0]);
+      }
+    };
+
+    const promises: Promise<void>[] = [];
+
+    // 1. iCal feed (Booking.com / Airbnb)
     if (item.iCalURL) {
-      fetch(`/api/ical?url=${encodeURIComponent(item.iCalURL)}`)
+      promises.push(
+        fetch(`/api/ical?url=${encodeURIComponent(item.iCalURL)}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.bookedDates && Array.isArray(data.bookedDates)) {
+              data.bookedDates.forEach((b: { start: string; end: string }) => expandRange(b.start, b.end));
+            }
+          })
+          .catch((err) => console.error("iCal fetch failed:", err))
+      );
+    }
+
+    // 2. Supabase master_guests (website direct bookings)
+    const roomParam = item.name ? `?room=${encodeURIComponent(item.name)}` : "";
+    promises.push(
+      fetch(`/api/availability${roomParam}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.bookedDates && Array.isArray(data.bookedDates)) {
-            const dates: string[] = [];
-            data.bookedDates.forEach((booking: { start: string; end: string }) => {
-              const start = new Date(booking.start);
-              const end = new Date(booking.end);
-              for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-                dates.push(d.toISOString().split("T")[0]);
-              }
-            });
-            setBookedDates(dates);
+            data.bookedDates.forEach((b: { start: string; end: string }) => expandRange(b.start, b.end));
           }
         })
-        .catch((err) => console.error("Failed to fetch availability:", err));
-    }
-  }, [item.iCalURL]);
+        .catch((err) => console.error("Availability fetch failed:", err))
+    );
+
+    Promise.all(promises).then(() => {
+      // Deduplicate
+      setBookedDates([...new Set(allDates)]);
+    });
+  }, [item.iCalURL, item.name]);
 
   // Handle date selection
   const handleDateSelect = (dateStr: string) => {
