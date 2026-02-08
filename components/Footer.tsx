@@ -186,6 +186,16 @@ export default function Footer() {
                     Moroccan Glossary
                   </a>
                 </li>
+                <li>
+                  <a 
+                    href="https://derb.so" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-sand/70 text-sm hover:text-sand transition-colors"
+                  >
+                    Derb — City Guide
+                  </a>
+                </li>
               </ul>
             </div>
 
